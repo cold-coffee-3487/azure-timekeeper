@@ -102,6 +102,11 @@ function computeTotalTime() {
     document.getElementById('total-elapsed-time').textContent =
      'Total Elapsed Time: ' + totalHours.toString().padStart(2,'0') + ':' +
      totalMinutes.toString().padStart(2,'0') + ' = ' + (totalMs / msToHours).toFixed(1) + ' hours';
+
+    computeWeekdaysThisMonth();
+
+
+
 }
 
 function saveDataToCookie() {
@@ -149,6 +154,40 @@ function clearData() {
     document.cookie = "timekeeperData=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.getElementById('total-elapsed-time').textContent = 'Total Elapsed Time: None';
 }  
+
+function computeWeekdaysThisMonth() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    let weekdays = 0;
+    let weekdaysRemaining = 0;
+
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(year, month, day);
+        const dayOfWeek = date.getDay();
+        if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Not Sunday(0) or Saturday(6)
+            weekdays++;
+            if (date > now) {
+                weekdaysRemaining++;
+            }
+        }
+    }
+    console.log('Weekdays remaining:', weekdaysRemaining);
+    const totalWorkHoursThisMonth = weekdays * 8.0;
+    document.getElementById('hours-this-month').textContent = totalWorkHoursThisMonth.toString();
+    let hoursWorkedText = document.getElementById('hours-through-today').value;
+    let hoursWorked = parseFloat(hoursWorkedText);
+    if (isNaN(hoursWorked)) {
+        hoursWorked = 0.0;
+    }
+    const hoursRemaining =  totalWorkHoursThisMonth - hoursWorked;
+    document.getElementById('hours-remaining').textContent = hoursRemaining.toFixed(1).toString();
+    const averageWorkday = hoursRemaining / weekdaysRemaining;
+    document.getElementById('average-workday').textContent = averageWorkday.toFixed(1).toString();
+
+}
 
 window.onload = function() {
     loadDataFromCookie();

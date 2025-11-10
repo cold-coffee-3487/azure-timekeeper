@@ -20,10 +20,7 @@
         <input type="text" id="input2" placeholder="End time HH:MM [AM/PM]">
         <button onclick="addRow()">Submit</button>
         <hr>
-    </div>
-    
-
-    
+    </div> 
 
     <div>
         <button onclick="clearData()">Clear Table</button>
@@ -41,13 +38,35 @@
         <tbody id="tableBody">
         </tbody>
     </table>
-    <hr>
-    <div>
-        <button onclick="computeTotalTime()">Total Time</button>
-    </div>
+    <hr>    
     <div id="total-elapsed-time">
-        Total Elapsed Time: None
+        Total Elapsed Time: None        
     </div> 
+
+    <div>
+        <hr>
+        <table>
+            <tr>
+                <th>Hours this Month</th>
+                <th>Hours through Today</th>
+                <th>Hours Remaining This Month</th>
+                <th>Average Workday Remaining</th>
+            </tr>
+            <tr>
+                <td id="hours-this-month">0.0</td>
+                <td>
+                    <input type="text" id="hours-through-today" placeholder="0.0">
+                </td>
+                <td id="hours-remaining">0.0</td>
+                <td id="average-workday">0.0</td>
+            </tr>
+        </table>
+        <hr>
+    </div>
+    <div>
+        <button onclick="computeTotalTime()">Compute</button>
+    </div>
+
         
 </body>
 </html>
